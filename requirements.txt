@@ -1,0 +1,7 @@
+python-dateutil
+numpy 
+scikit-learn 
+pytest 
+matplotlib 
+pandas 
+tqdm

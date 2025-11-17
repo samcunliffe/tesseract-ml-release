@@ -1,0 +1,32 @@
+name: Install and run pytest tests
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies and the package itself
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        python setup.py install  # doesn't work on all python versions
+    - name: Test with pytest
+      run: |
+        pytest
